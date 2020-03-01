@@ -1,12 +1,6 @@
 import React from 'react';
-import {SafeAreaView, View, Text} from 'react-native';
+import Login from './components/Login';
 
-const App = () => (
-  <SafeAreaView>
-    <View>
-      <Text>Hello Bingo!</Text>
-    </View>
-  </SafeAreaView>
-);
+const App = () => <Login />;
 
 export default App;
