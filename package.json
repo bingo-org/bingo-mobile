@@ -9,9 +9,8 @@
     "test": "jest",
     "lint": "eslint ."
   },
-  "dependencies": {
-    "react": "16.9.0",
-    "react-native": "0.61.5"
+  "jest": {
+    "preset": "react-native"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",
@@ -23,7 +22,8 @@
     "metro-react-native-babel-preset": "^0.58.0",
     "react-test-renderer": "16.9.0"
   },
-  "jest": {
-    "preset": "react-native"
+  "dependencies": {
+    "react": "16.9.0",
+    "react-native": "0.61.5"
   }
 }
