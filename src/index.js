@@ -1,6 +1,6 @@
 import React from 'react';
-import Login from './components/Login';
+import RoomList from './components/RoomList';
 
-const App = () => <Login />;
+const App = () => <RoomList />;
 
 export default App;
