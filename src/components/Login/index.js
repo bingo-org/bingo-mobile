@@ -1,4 +1,5 @@
 import React from 'react';
+import {Alert} from 'react-native';
 import styled from 'styled-components/native';
 import {
   GoogleSignin,
@@ -6,6 +7,7 @@ import {
   statusCodes,
 } from 'react-native-google-signin';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import api from '../../services/api';
 
 const SafeAreaView = styled.SafeAreaView`
   flex: 1;
@@ -19,6 +21,7 @@ const Container = styled.View`
 const Title = styled.Text`
   font-size: 24px;
   font-weight: bold;
+  margin-bottom: 60px;
 `;
 
 class Login extends React.Component {
@@ -30,22 +33,23 @@ class Login extends React.Component {
   }
 
   async loginWithGoogle() {
+    const navigation = this.props.navigation;
     try {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signIn();
       const {accessToken} = await GoogleSignin.getTokens();
+      const {data} = await api.sessions.create({
+        credential: {provider: 'google', token: accessToken},
+      });
       await GoogleSignin.signOut();
-      console.log(accessToken);
+      navigation.replace('Home');
     } catch (error) {
-      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-      } else if (error.code === statusCodes.IN_PROGRESS) {
-        // operation (e.g. sign in) is in progress already
-      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        // play services not available or outdated
-      } else {
-        // some other error happened
-      }
+      if (
+        error.code === statusCodes.SIGN_IN_CANCELLED ||
+        error.code === statusCodes.IN_PROGRESS
+      )
+        return;
+      Alert.alert('Hubo un error', 'Por favor reintentalo mas tarde');
     }
   }
 
